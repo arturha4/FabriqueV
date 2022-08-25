@@ -46,7 +46,7 @@ class MessageSerializer(serializers.ModelSerializer):
 
 class MessageCreateSerializer(serializers.ModelSerializer):
     sent_at = serializers.DateTimeField(format="%d.%m.%Y %H:%M", input_formats=["%d.%m.%Y %H:%M"])
-    sent=serializers.BooleanField(read_only=True)
+    sent = serializers.BooleanField(read_only=True)
 
     class Meta:
         model = Message
