@@ -6,4 +6,4 @@ def get_mailings():
 
 
 def get_correct_mailings():
-    return [item for item in Mailing.objects.all() if item.on_time() and item.get_unsent_messages().exists()]
+    return [item for item in get_mailings() if item.on_time() and item.get_unsent_messages().exists()]
