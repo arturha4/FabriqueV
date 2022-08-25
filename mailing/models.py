@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 
 
@@ -6,6 +8,15 @@ class Mailing(models.Model):
     message_text = models.TextField()
     mailing_filter = models.CharField(max_length=30)
     ended_at = models.DateTimeField()
+
+    def get_unsent_messages(self):
+        return self.messages.filter(sent=False)
+
+    def on_time(self):
+        started_at = self.started_at
+        ended_at = self.ended_at
+        if started_at.timestamp() < datetime.now().timestamp() < ended_at.timestamp():
+            return True
 
 
 class Customer(models.Model):
@@ -16,7 +27,15 @@ class Customer(models.Model):
 
 
 class Message(models.Model):
-    sent_at = models.DateTimeField()
+    sent_at = models.DateTimeField(null=True)
     sent = models.BooleanField(default=False)
     mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE, related_name="messages")
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name="messages")
+
+    def is_sent(self):
+        self.sent = True
+        self.save()
+
+    def set_sent_at_now(self):
+        self.sent_at = datetime.now()
+        self.save()

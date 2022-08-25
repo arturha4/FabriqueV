@@ -37,8 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'mailing',
     'rest_framework',
-    'mailing'
 ]
 
 MIDDLEWARE = [
@@ -86,7 +86,12 @@ DATABASES = {
         'PORT': os.getenv('db_port'),
     }
 }
-
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'db.sqlite3',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -112,11 +117,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Yekaterinburg'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -128,3 +133,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
